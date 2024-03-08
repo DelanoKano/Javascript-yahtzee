@@ -91,7 +91,7 @@ body {
     max-width: 20%;
     min-height: 20%;
     max-height: 20%;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 .die-container:hover {
