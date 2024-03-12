@@ -186,11 +186,12 @@ function rollsLeft() {
 }
 
 function lockNumber(number) {
-    let test = document.getElementById(`${number}p1`);
+    let numbers = document.getElementById(`${number}p1`);
     let total = document.getElementById(`firsttotalp1`);
     let bonus = document.getElementById(`bonusp1`);
-    test.name = 'locked';
-    test.style.background = 'lightgray';
+    numbers.name = 'locked';
+    numbers.style.background = 'lightgray';
+    numbers.style.border = '2px solid black';
     lockedNumbers++;
     let totalPoints = points.reduce((a, b) => a + b, 0);
     if (lockedNumbers === 6) total.textContent = totalPoints;
