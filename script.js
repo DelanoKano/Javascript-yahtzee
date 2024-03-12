@@ -8,6 +8,7 @@ let yahtzee = false;
 let sstraight = false;
 let lstraight = false;
 let lockedNumbers = 0;
+let hallo = "hallo";
 
 let fullhouse = {
     two: false,
