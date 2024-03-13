@@ -1,20 +1,27 @@
 let dice = [];
 let lockedDice = [];
 let points = [];
-let specialPoints = [];
+let specialPoints = [0, 0, 0, 0, 0, 0, 0];
 let tkind = false;
 let fkind = false;
 let yahtzee = false;
 let sstraight = false;
 let lstraight = false;
-let lockedNumbers = 0;
-
 
 let fullhouse = {
     two: false,
     three: false
-
 };
+
+let special = {
+    tkind: false,
+    fkind: false,
+    fhouse: false,
+    sstraight: false,
+    lstraight: false,
+    yahtzee: false,
+    chance: 0,
+}
 
 function rollDice() {
     dice = [];
@@ -187,13 +194,28 @@ function rollsLeft() {
 
 function lockNumber(number) {
     let numbers = document.getElementById(`${number}p1`);
-    let total = document.getElementById(`firsttotalp1`);
-    let bonus = document.getElementById(`bonusp1`);
     numbers.name = 'locked';
     numbers.style.background = 'lightgray';
     numbers.style.border = '2px solid black';
-    lockedNumbers++;
-    let totalPoints = points.reduce((a, b) => a + b, 0);
-    if (lockedNumbers === 6) total.textContent = totalPoints;
-    if (lockedNumbers === 6 && totalPoints >= 63) bonus.textContent = totalPoints + 35;
+    calculateTotal();
+    if(number.isInteger()) {
+        console.log("hi");
+    }
+}
+
+function calculateTotal() {
+    let lockedNumbers = 0;
+    let firstTotal = document.getElementById("firsttotalp1");
+    let bonus = document.getElementById("bonusp1");
+    let total = points.reduce((a, b) => a + b, 0);
+        for(let i = 0; i < 6; i++) {
+        let numbers = document.getElementById(`${i + 1}p1`);
+        if(numbers.name === "locked") {
+            lockedNumbers++;
+        }
+    }
+    if(lockedNumbers === 6) {
+        firstTotal.textContent = total;
+        if(total >= 63) bonus.textContent = total + 35;
+    }
 }
