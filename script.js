@@ -1,12 +1,16 @@
+const rollsText = document.getElementById('rolls-Left');
+
 let dice = [];
+let rolls = 3;
 let lockedDice = [];
 let points = [];
-let specialPoints = [0, 0, 0, 0, 0, 0, 0];
+let specialPoints = [];
 let tkind = false;
 let fkind = false;
 let yahtzee = false;
 let sstraight = false;
 let lstraight = false;
+let grandTotal = 0;
 
 let fullhouse = {
     two: false,
@@ -14,18 +18,18 @@ let fullhouse = {
 };
 
 let special = {
-    tkind: false,
-    fkind: false,
-    fhouse: false,
-    sstraight: false,
-    lstraight: false,
-    yahtzee: false,
-    chance: 0,
+    tkind: 1,
+    fkind: 2,
+    fhouse: 3,
+    sstraight: 4,
+    lstraight: 5,
+    yahtzee: 6,
+    chance: 7
 }
 
 function rollDice() {
+    if (rolls === 0) return;
     dice = [];
-    rollsLeft();
     for (let i = 0; i < 5; i++) {
         let die = document.getElementById("dice-" + (i + 1))
         if (lockedDice.includes('dice-' + (i + 1))) {
@@ -39,7 +43,8 @@ function rollDice() {
         }
     }
     scoreUpdate();
-
+    rolls--;
+    rollsText.innerHTML = rolls;
 }
 
 function randomDice() {
@@ -75,7 +80,6 @@ function scoreUpdate() {
         value.textContent = number * (i + 1);
         points[i] = number * (i + 1);
     }
-    console.log(points);
     checkTkind();
     checkFkind();
     checkYahtzee();
@@ -83,7 +87,6 @@ function scoreUpdate() {
     checkChance();
     checkSstraight();
     checkLstraight();
-
 }
 
 function checkNumber(number) {
@@ -93,114 +96,120 @@ function checkNumber(number) {
             count++
         }
     }
-    if (count >= 3) {
-        tkind = true;
-    }
-    if (count >= 4) {
-        fkind = true;
-    }
-    if (count == 5) {
-        yahtzee = true;
-    }
-    if (count === 3) {
-        fullhouse.three = true;
-    }
-    if (count === 2) {
-        fullhouse.two = true;
-    }
+    if (count >= 3) tkind = true;
+    if (count >= 4) fkind = true;
+    if (count == 5) yahtzee = true;
+    if (count === 3) fullhouse.three = true;
+    if (count === 2) fullhouse.two = true;
     return count;
 }
 
 function checkTkind() {
     let value = document.getElementById('tkindp1');
+    if (value.name === "locked") return;
     if (tkind) {
         value.textContent = dice.reduce((a, b) => a + b, 0);
+        specialPoints[0] = dice.reduce((a, b) => a + b, 0);
     } else {
         value.textContent = "0"
+        specialPoints[0] = 0;
     }
 }
 
 function checkFkind() {
     let value = document.getElementById('fkindp1');
+    if (value.name === "locked") return;
     if (fkind) {
         value.textContent = dice.reduce((a, b) => a + b, 0);
+        specialPoints[1] = dice.reduce((a, b) => a + b, 0);
     } else {
         value.textContent = "0";
+        specialPoints[1] = 0;
     }
 
-}
-
-function checkYahtzee() {
-    let value = document.getElementById('yahtzeep1');
-    if (yahtzee) {
-        value.textContent = 50;
-    }
-    else {
-        value.textContent = 0;
-    }
 }
 
 function checkFhouse() {
     let value = document.getElementById('fhousep1');
+    if (value.name === "locked") return;
     if (fullhouse.three && fullhouse.two) {
         value.textContent = 25;
+        specialPoints[2] = 25;
     }
     else {
         value.textContent = 0;
+        specialPoints[2] = 0;
     }
-
-}
-
-function checkChance() {
-    let value = document.getElementById('chancep1');
-    value.textContent = dice.reduce((a, b) => a + b, 0);
-
 }
 
 function checkSstraight() {
     let value = document.getElementById('sstraightp1');
+    if (value.name === "locked") return;
     dice.sort();
     if (/1234|2345|3456/.test(dice.join(''))) {
-        sstraight = true;
         value.textContent = 30;
+        specialPoints[3] = 30;
     }
     else {
         value.textContent = 0;
+        specialPoints[3] = 0;
     }
 }
 
 function checkLstraight() {
     let value = document.getElementById('lstraightp1');
+    if (value.name === "locked") return;
     dice.sort();
     if (/12345|23456/.test(dice.join(''))) {
-        lstraight = true;
         value.textContent = 40;
+        specialPoints[4] = 40;
     }
     else {
         value.textContent = 0;
+        specialPoints[4] = 0;
     }
-
-
 }
 
-function rollsLeft() {
-    const rolls = 3;
-    const value = document.getElementById('rolls-Left');
-    value.innerHTML--;
-    if (value.innerHTML < 0) {
-        return value.innerHTML = rolls;
+
+function checkYahtzee() {
+    let value = document.getElementById('yahtzeep1');
+    if (value.name === "locked") return;
+    if (yahtzee) {
+        value.textContent = 50;
+        specialPoints[5] = 50;
     }
+    else {
+        value.textContent = 0;
+        specialPoints[5] = 0;
+    }
+}
+
+function checkChance() {
+    let value = document.getElementById('chancep1');
+    if (value.name === "locked") return;
+    value.textContent = dice.reduce((a, b) => a + b, 0);
+    specialPoints[6] = dice.reduce((a, b) => a + b, 0);
 }
 
 function lockNumber(number) {
     let numbers = document.getElementById(`${number}p1`);
+    let grandTotal = document.getElementById("grandtotalp1");
+    if (numbers.name === "locked") return;
+    dice = [];
+    rolls = 3;
+    rollsText.innerHTML = rolls;
+    for (let i = 0; i < 5; i++) {
+        let die = document.getElementById("dice-" + (i + 1))
+        die.style.border = "none";
+        die.src = "";
+    }
+    lockedDice = [];
     numbers.name = 'locked';
     numbers.style.background = 'lightgray';
     numbers.style.border = '2px solid black';
     calculateTotal();
-    if(number.isInteger()) {
-        console.log("hi");
-    }
+    calculateSpecialTotal();
+    scoreUpdate();
 }
 
 function calculateTotal() {
@@ -208,14 +217,32 @@ function calculateTotal() {
     let firstTotal = document.getElementById("firsttotalp1");
     let bonus = document.getElementById("bonusp1");
     let total = points.reduce((a, b) => a + b, 0);
-        for(let i = 0; i < 6; i++) {
+    for (let i = 0; i < 6; i++) {
         let numbers = document.getElementById(`${i + 1}p1`);
-        if(numbers.name === "locked") {
+        if (numbers.name === "locked") {
             lockedNumbers++;
         }
     }
-    if(lockedNumbers === 6) {
+    if (lockedNumbers === 6) {
         firstTotal.textContent = total;
-        if(total >= 63) bonus.textContent = total + 35;
+        if (total >= 63) bonus.textContent = total += 35;
+        grandTotal += total;
+    }
+}
+
+function calculateSpecialTotal() {
+    let lockedNumbers = 0;
+    let specialTotal = document.getElementById("secondtotalp1");
+    let total = specialPoints.reduce((a, b) => a + b, 0);
+    for (let i = 0; i < 7; i++) {
+        let specials = Object.keys(special)[i];
+        let numbers = document.getElementById(`${specials}p1`);
+        if (numbers.name === "locked") {
+            lockedNumbers++;
+        }
+    }
+    if (lockedNumbers === 7) {
+        specialTotal.textContent = total;
+        grandTotal += total;
     }
 }
