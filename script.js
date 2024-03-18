@@ -193,7 +193,6 @@ function checkChance() {
 
 function lockNumber(number) {
     let numbers = document.getElementById(`${number}p1`);
-    let grandTotal = document.getElementById("grandtotalp1");
     if (numbers.name === "locked") return;
     dice = [];
     rolls = 3;
@@ -217,6 +216,8 @@ function calculateTotal() {
     let firstTotal = document.getElementById("firsttotalp1");
     let bonus = document.getElementById("bonusp1");
     let total = points.reduce((a, b) => a + b, 0);
+    let total1 = specialPoints.reduce((a, b) => a + b, 0);
+    let value = document.getElementById("grandtotalp1");
     for (let i = 0; i < 6; i++) {
         let numbers = document.getElementById(`${i + 1}p1`);
         if (numbers.name === "locked") {
@@ -226,7 +227,8 @@ function calculateTotal() {
     if (lockedNumbers === 6) {
         firstTotal.textContent = total;
         if (total >= 63) bonus.textContent = total += 35;
-        grandTotal += total;
+        value.textContent = grandTotal + total + total1;
+        
     }
 }
 
