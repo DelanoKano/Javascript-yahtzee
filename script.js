@@ -223,8 +223,9 @@ function calculateTotal() {
         }
     }
     if (lockedNumbers === 6) {
+        let bonus1 = 35;
         firstTotal.textContent = total;
-        if (total >= 63) bonus.textContent = total += 35;
+        if (total >= 63) bonus.textContent = total += bonus1;
     }
 }
 
@@ -233,7 +234,6 @@ function calculateSpecialTotal() {
     let specialTotal = document.getElementById("secondtotalp1");
     let total1 = points.reduce((a, b) => a + b, 0);
     let total = specialPoints.reduce((a, b) => a + b, 0);
-    let value = document.getElementById("grandtotalp1");
     for (let i = 0; i < 7; i++) {
         let specials = Object.keys(special)[i];
         let numbers = document.getElementById(`${specials}p1`);
@@ -244,7 +244,10 @@ function calculateSpecialTotal() {
     }
     if (lockedNumbers === 7) {
         specialTotal.textContent = total;
-        value.textContent = grandTotal + total + total1;
+        document.getElementById("grandtotalp1").textContent = total1 + total + 35;  
     }
-    
+    if (total1 < 63) {
+        document.getElementById("grandtotalp1").textContent = total1 + total;
+    }
 }
+
