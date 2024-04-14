@@ -39,7 +39,7 @@ function rollDice() {
             let random = randomDice();
             dice.push(random);
             die.name = random;
-            die.src = "Dice-" + random + ".png"
+            die.src = "Images/Dice-" + random + ".png"
         }
     }
     scoreUpdate();
