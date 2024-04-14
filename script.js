@@ -59,7 +59,7 @@ function lockDice(die) {
         dice.style.border = "none"
     } else {
         lockedDice.push(die);
-        dice.style.border = "3px solid red"
+        dice.style.border = "5px outset black"
     }
 }
 
@@ -204,8 +204,8 @@ function lockNumber(number) {
     }
     lockedDice = [];
     numbers.name = 'locked';
-    numbers.style.background = 'lightgray';
-    numbers.style.border = '2px solid black';
+    numbers.style.background = 'rgb(144,238,144)';
+    numbers.style.border = '3px groove black';
     calculateTotal();
     calculateSpecialTotal();
     scoreUpdate();
