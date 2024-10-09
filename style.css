@@ -49,8 +49,9 @@ body {
 .score-container {
     margin-left: 5%;
     width: 20%;
-    background-color: white;
-    border: 2px solid #333;
+    background-color: rgb(255, 252, 252);
+    border: 1px solid black;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 15px;
 }
 
@@ -59,7 +60,8 @@ body {
     margin-top: 0%;
     width: 20%;
     background-color: white;
-    border: 2px solid #333;
+    border: 1px solid black;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 15px;
 
 }
@@ -69,7 +71,8 @@ body {
     margin-top: 1.5%;
     width: 20%;
     background-color: white;
-    border: 2px solid #333;
+    border: 1px solid black;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 15px;
 }
 
@@ -80,7 +83,8 @@ body {
     top: 0;
     margin-right: 10%;
     margin-top: 5%;
-    border: 2px solid #333;
+    border: 1px solid black;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 15px;
     width: 30%;
     background-color: rgb(35, 130, 0);
